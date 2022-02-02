@@ -1,0 +1,10 @@
+<resources>
+    <string name="loading">로딩중…</string>
+
+    <string name="station_not_found">근처에 버스 정류장이 없습니다!</string>
+    <string name="route_not_found">지금은 버스가 없습니다!</string>
+
+    <string name="route_number">버스 번호: %s</string>
+    <string name="route_eta">남은 시간: %d분</string>
+    <string name="route_remain">남은 정류장 수: %s개</string>
+</resources>
