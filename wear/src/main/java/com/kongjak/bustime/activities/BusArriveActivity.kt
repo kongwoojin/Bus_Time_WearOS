@@ -2,13 +2,15 @@ package com.kongjak.bustime.activities
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.wear.widget.WearableLinearLayoutManager
 import com.kongjak.bustime.R
 import com.kongjak.bustime.databinding.ActivityBusArriveBinding
-import com.kongjak.bustime.utilities.*
+import com.kongjak.bustime.utilities.ArrayLists
+import com.kongjak.bustime.utilities.BusList
+import com.kongjak.bustime.utilities.BusListAdapter
+import com.kongjak.bustime.utilities.BusListParser
 
 class BusArriveActivity : Activity() {
 
@@ -27,7 +29,7 @@ class BusArriveActivity : Activity() {
         val stationID = intent.getStringExtra("stationID")
         val cityCode = intent.getStringExtra("cityCode")
 
-        ArrayLists.destroyBusListArray()
+        ArrayLists.busListArray.clear()
 
         if (cityCode != null && stationID != null) {
             getBusListData(stationID, cityCode)
@@ -49,7 +51,7 @@ class BusArriveActivity : Activity() {
     }
 
     private fun initView() {
-        busListArray = ArrayList(ArrayLists.getBusListArray())
+        busListArray = ArrayList(ArrayLists.busListArray)
         myAdapter = BusListAdapter(busListArray)
         if (busListArray.isEmpty()) {
             with(binding) {

@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kongjak.bustime.R
 import com.kongjak.bustime.databinding.BusArriveListBinding
-import java.util.*
 
 class BusListAdapter(private val BusArrayList: ArrayList<BusList>) :
     RecyclerView.Adapter<BusListAdapter.BusViewHolder>() {
@@ -33,5 +32,5 @@ class BusListAdapter(private val BusArrayList: ArrayList<BusList>) :
     }
 
     class BusViewHolder(val binding: BusArriveListBinding) :
-        RecyclerView.ViewHolder(binding.root) {}
+        RecyclerView.ViewHolder(binding.root)
 }

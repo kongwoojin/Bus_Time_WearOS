@@ -1,5 +1,6 @@
 package com.kongjak.bustime.utilities
 
+import android.util.Log
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.IOException
@@ -12,7 +13,7 @@ object StationParser {
     fun parseXml(serviceID: String, latitude: String?, longitude: String?) {
 
         val urlBuilder =
-            ("http://openapi.tago.go.kr/openapi/service/BusSttnInfoInqireService/getCrdntPrxmtSttnList"
+            ("http://apis.data.go.kr/1613000/BusSttnInfoInqireService/getCrdntPrxmtSttnList"
                     + "?" + URLEncoder.encode("serviceKey", "UTF-8")
                     + "=" + serviceID
                     + "&" + URLEncoder.encode("gpsLati", "UTF-8")
@@ -21,7 +22,9 @@ object StationParser {
                     + "=" + URLEncoder.encode(longitude, "UTF-8")) /* 걍도도 */
         val url = URL(urlBuilder)
 
-        val stationArray = ArrayList<Station>(ArrayLists.getStationArray())
+        Log.d("Test", url.toString())
+
+        val stationArray = ArrayList<Station>(ArrayLists.stationArray)
 
         var inputStream: InputStream? = null
         try {
@@ -39,7 +42,6 @@ object StationParser {
             var stationLongitude = ""
             var stationNodeID = ""
             var stationNodeName = ""
-            var stationNodeNumber = ""
 
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 if (eventType == XmlPullParser.START_TAG) {
@@ -63,12 +65,10 @@ object StationParser {
                         "nodenm" -> {
                             stationNodeName = text
                         }
-                        "nodeno" -> {
-                            stationNodeNumber = text
-                        }
                     }
                 } else if (eventType == XmlPullParser.END_TAG) {
                     if (xmlPullParser.name.equals("item")) {
+                        Log.d("Test", stationNodeName)
                         stationArray.add(
                             Station(
                                 stationCityCode,
@@ -94,6 +94,6 @@ object StationParser {
             e.printStackTrace()
         }
 
-        ArrayLists.setStationArray(stationArray)
+        ArrayLists.stationArray = stationArray
     }
 }

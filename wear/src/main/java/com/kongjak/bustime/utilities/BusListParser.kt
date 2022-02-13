@@ -1,5 +1,6 @@
 package com.kongjak.bustime.utilities
 
+import android.util.Log
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.IOException
@@ -11,8 +12,10 @@ object BusListParser {
 
     fun parseXml(serviceID: String, stationID: String?, cityCode: String?) {
 
+        Log.d("Test", cityCode!!)
+
         val urlBuilder =
-            ("http://openapi.tago.go.kr/openapi/service/ArvlInfoInqireService/getSttnAcctoArvlPrearngeInfoList"
+            ("http://apis.data.go.kr/1613000/ArvlInfoInqireService/getSttnAcctoArvlPrearngeInfoList"
                     + "?" + URLEncoder.encode("serviceKey", "UTF-8")
                     + "=" + serviceID
                     + "&" + URLEncoder.encode("nodeId", "UTF-8")
@@ -21,7 +24,9 @@ object BusListParser {
                     + "=" + URLEncoder.encode(cityCode, "UTF-8")) /* 걍도도 */
         val url = URL(urlBuilder)
 
-        val busListArray = ArrayList<BusList>(ArrayLists.getBusListArray())
+        Log.d("Test", url.toString())
+
+        val busListArray = ArrayList<BusList>(ArrayLists.busListArray)
 
         var inputStream: InputStream? = null
         try {
@@ -61,6 +66,7 @@ object BusListParser {
                     }
                 } else if (eventType == XmlPullParser.END_TAG) {
                     if (xmlPullParser.name.equals("item")) {
+                        Log.d("Test", routeID)
                         busListArray.add(
                             BusList(
                                 prevStation,
@@ -85,6 +91,6 @@ object BusListParser {
             e.printStackTrace()
         }
 
-        ArrayLists.setBusListArray(busListArray)
+        ArrayLists.busListArray = busListArray
     }
 }

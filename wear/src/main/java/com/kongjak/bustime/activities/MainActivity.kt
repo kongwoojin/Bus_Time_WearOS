@@ -9,7 +9,6 @@ import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.wear.widget.WearableLinearLayoutManager
-import com.google.android.gms.location.*
 import com.kongjak.bustime.R
 import com.kongjak.bustime.databinding.ActivityMainBinding
 import com.kongjak.bustime.utilities.*
@@ -73,7 +72,7 @@ class MainActivity : Activity() {
     }
 
     private fun initView() {
-        stationArray = ArrayList(ArrayLists.getStationArray())
+        stationArray = ArrayList(ArrayLists.stationArray)
         myAdapter = StationAdapter(stationArray)
         if (stationArray.isEmpty()) {
             with(binding) {
@@ -90,7 +89,7 @@ class MainActivity : Activity() {
                 WearableLinearLayoutManager(this@MainActivity, CustomScrollingLayoutCallback())
             adapter = myAdapter
         }
-        val snapHelper: PagerSnapHelper = PagerSnapHelper()
+        val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(binding.recyclerView)
         binding.progressLayout.visibility = View.GONE
     }
@@ -106,6 +105,7 @@ class MainActivity : Activity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        ArrayLists.destroyArrayLists()
+        ArrayLists.busListArray.clear()
+        ArrayLists.stationArray.clear()
     }
 }

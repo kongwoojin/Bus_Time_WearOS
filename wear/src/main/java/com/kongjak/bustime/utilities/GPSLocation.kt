@@ -7,8 +7,8 @@ import android.os.Looper
 import com.google.android.gms.location.*
 
 class GPSLocation {
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    lateinit var locationCallback: LocationCallback
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var locationCallback: LocationCallback
     var locationData: Location? = null
 
     @SuppressLint("MissingPermission")
